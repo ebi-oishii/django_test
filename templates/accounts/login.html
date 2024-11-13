@@ -1,0 +1,27 @@
+{% extend "base.html" %}
+{% load static %}
+
+{# -- タイトル -- #}
+{% block title%}ログイン{% endblock %}
+
+{# -- CSS -- #}
+{% block extra_css %}
+    <style type="text/css">
+        main > section > .mx-auto {
+            max-width: 400px;
+        }
+    </style>
+{% endblock %}
+
+{# --メインコンテンツ --#}
+{% block main %}
+    <main>
+        <section id="login_form" class="container mb-4">
+            ...
+        </section>
+    </main>
+{% endblock %}
+
+{# -- フッターは表示しない -- #}
+{% block footer %}
+{% endblock %}

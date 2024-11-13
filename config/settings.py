@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5-zj^vgs!zkhsv6=fr@k(lp&ffje&wj)0$_&f7lgwa85-zwn))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -48,6 +48,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SUCURE_SSL_REDIRECT = True
 
 ROOT_URLCONF = 'config.urls'
 
@@ -103,9 +105,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asis/Tokyo'
 
 USE_I18N = True
 
@@ -116,8 +118,45 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILE_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = f"/var/www/{BASE_DIR.name}/static"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = f"/var/www/{BASE_DIR.name}/media"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "production": { 
+            "format": "{asctime} <{process:d},{thread:d}> [{levelname}] {pathname}:{lineno:d} {message}",
+            "style": "{",
+        }
+    },
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": f"/var/log/{BASE_DIR.name}/app.log",
+            "formatter": "production"
+        }
+    },
+    "root": {
+        "handlers": ["file"],
+        "level": "INFO",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+    },
+}
